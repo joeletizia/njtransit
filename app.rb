@@ -14,7 +14,6 @@ def persist_node(node)
   track, line, train = content.split("|")
   if track
     train_data = TrainData.create(line: line, train_id: train, track: track)
-    puts train_data
   end
 end
 
