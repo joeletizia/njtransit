@@ -12,7 +12,7 @@ def persist_node(node)
   # Track, Line, Train id
   content =  "#{node.content}|#{node.next.next.content}|#{node.next.next.next.next.content}"
   track, line, train = content.split("|")
-  if track
+  if track.present? && train.present?
     train_data = TrainData.create(line: line, train_id: train, track: track)
   end
 end
