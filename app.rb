@@ -18,7 +18,7 @@ def persist_node(node)
   content =  "#{node.content}|#{node.next.next.content}|#{node.next.next.next.next.content}"
   track, line, train_id = content.split("|")
   if track.present? && train_id.present?
-    TrainData.create(train_id: train_id, track: track) unless train_data_already_recorded_today?(train_id)
+    TrainData.create(line: line, train_id: train_id, track: track) unless train_data_already_recorded_today?(train_id)
   end
 end
 
