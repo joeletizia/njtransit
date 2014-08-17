@@ -6,15 +6,19 @@ require_relative './train_data'
 
 ActiveRecord::Base.establish_connection(
   adapter: 'sqlite3',
-  database: 'db/njtransit_analysis.db'
+  database: 'db/njtransit_analysis.sqlite3'
 )
+
+def train_data_already_recorded_today?(train_id)
+  TrainData.where(train_id: train_id, created_at: Time.now.beginning_of_day..Time.now.end_of_day).any?
+end
 
 def persist_node(node)
   # Track, Line, Train id
   content =  "#{node.content}|#{node.next.next.content}|#{node.next.next.next.next.content}"
   track, line, train_id = content.split("|")
   if track.present? && train_id.present?
-    train_data = TrainData.first_or_create(train_id: train_id, created_date: Time.now.at_beginning_of_day..Time.now.at_end_of_day)
+    TrainData.create(train_id: train_id, track: track) unless train_data_already_recorded_today?(train_id)
   end
 end
 
