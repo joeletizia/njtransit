@@ -20,6 +20,6 @@
 # Learn more: http://github.com/javan/whenever
 #
 
-every 1.minute do
-  command "ruby ~/workspace/njtransit/app.rb"
+every 5.minutes do
+  command "ruby #{ENV['njtransit_app_path']}"
 end
