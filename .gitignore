@@ -1,5 +1,6 @@
 *.db
 *.log
+*.sqlite3
 
 *.gem
 *.rbc

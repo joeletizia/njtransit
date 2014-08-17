@@ -1,6 +1,7 @@
 require 'nokogiri'
 require 'pry'
 require 'active_record'
+require 'active_support/all'
 require_relative './train_data'
 
 ActiveRecord::Base.establish_connection(
@@ -11,9 +12,9 @@ ActiveRecord::Base.establish_connection(
 def persist_node(node)
   # Track, Line, Train id
   content =  "#{node.content}|#{node.next.next.content}|#{node.next.next.next.next.content}"
-  track, line, train = content.split("|")
-  if track.present? && train.present?
-    train_data = TrainData.create(line: line, train_id: train, track: track)
+  track, line, train_id = content.split("|")
+  if track.present? && train_id.present?
+    train_data = TrainData.first_or_create(train_id: train_id, created_date: Time.now.at_beginning_of_day..Time.now.at_end_of_day)
   end
 end
 

@@ -1,6 +1,7 @@
 class CreateTrainData < ActiveRecord::Migration
   def change
     create_table :train_data do |t|
+      t.timestamps
       t.string :line, :string
       t.integer :train_id
       t.string :track, null: false

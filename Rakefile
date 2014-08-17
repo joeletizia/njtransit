@@ -4,15 +4,19 @@ require 'active_record'
 
 namespace :db do
   def create_database config
-    ActiveRecord::Base.establish_connection(
-      adapter: 'sqlite3',
-      database: 'db/njtransit_analysis.db'
-    )
+    options = {:charset => 'utf8', :collation => 'utf8_unicode_ci'}
+
+    ActiveRecord::Base.establish_connection config
+    ActiveRecord::Base.connection
   end
  
   task :environment do
     DATABASE_ENV = ENV['DATABASE_ENV'] || 'development'
     MIGRATIONS_DIR = ENV['MIGRATIONS_DIR'] || 'db/migrate'
+  end
+
+  task :configuration => :environment do
+    @config = YAML.load_file('config/databases.yml')[DATABASE_ENV]
   end
 
   task :configure_connection => :configuration do
