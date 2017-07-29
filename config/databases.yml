@@ -1,5 +1,4 @@
 development:
-  adapter: sqlite3
-  database: db/njtransit_analysis.sqlite3
+  adapter: postgresql
+  database: nj_transit
   pool: 5
-  timeout: 5000
