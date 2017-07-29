@@ -10,7 +10,7 @@ namespace :db do
     ActiveRecord::Base.establish_connection config
     ActiveRecord::Base.connection
   end
- 
+
   task :environment do
     DATABASE_ENV = ENV['DATABASE_ENV'] || 'development'
     MIGRATIONS_DIR = ENV['MIGRATIONS_DIR'] || 'db/migrate'
@@ -51,4 +51,13 @@ namespace :db do
   task :version => :configure_connection do
     puts "Current version: #{ActiveRecord::Migrator.current_version}"
   end
+
+  desc "This task is called by the Heroku scheduler add-on"
+  task :pull_data => :configure_connection do
+    require_relative 'lib/nj_transit/schedule_sucker'
+    puts "Pulling data from Departure Vision"
+    NJTransit::ScheduleSucker.run
+    puts "Done"
+  end
 end
+

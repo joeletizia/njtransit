@@ -1,4 +1,5 @@
-development:
+development: &default
   adapter: postgresql
   database: nj_transit
   pool: 5
+  host: localhost
