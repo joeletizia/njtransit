@@ -3,3 +3,13 @@ development: &default
   database: nj_transit
   pool: 5
   host: localhost
+
+test:
+  adapter: postgresql
+  database: nj_tranist_test
+  pool: 5
+
+production:
+  adapter: postgresql
+  database: nj_transit_production
+  pool: 5
